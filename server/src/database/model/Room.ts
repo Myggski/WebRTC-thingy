@@ -1,7 +1,7 @@
 /**
  * Voice-chat or text-chat
  */
-export enum ROOM_TYPES {
+export enum ROOM_TYPE {
     VOICE,
     TEXT
 };
@@ -11,7 +11,8 @@ export enum ROOM_TYPES {
  * name - Name of the room (unique)
  * type - what type of room
  */
-export default interface Room {
+export interface Room {
+    id: string,
     name: string,
-    type: ROOM_TYPES,
+    type: ROOM_TYPE,
 };

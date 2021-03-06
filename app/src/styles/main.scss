@@ -1,0 +1,31 @@
+@import "~normalize.css/normalize.css";
+@import './variables';
+@import './mixins';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+
+body {
+  
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body,
+html {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 16px;
+  color: $color-lightest;
+  background-color: $color-darker;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  touch-action: manipulation;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+   height: 100%;
+}

@@ -35,7 +35,8 @@ router.delete('/:name', (req: any, res: any, next: any) => {
  * Create room
  */
 router.post('/', (req: any, res: any) => {
-    const room = RoomRepo.create(req.body.room);
+    const room = RoomRepo.create(req.body?.name, req.body?.type);
+    console.log(req.body);
     return Created(room).send(res);
 });
 

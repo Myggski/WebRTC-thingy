@@ -1,14 +1,7 @@
 import { createStore } from 'vuex';
-import { rooms } from './room';
-import { RootState } from './types';
+import RoomModule from './room';
 
-export default createStore<RootState>({
-  state: {
-    version: '1.0.0',
-  },
-  mutations: {},
-  actions: {},
-  modules: {
-    rooms,
-  },
-});
+const store = createStore({});
+export const roomModule = new RoomModule({ store, name: 'room' });
+
+export default store;

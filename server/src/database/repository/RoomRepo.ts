@@ -1,6 +1,6 @@
-import { Created } from './../../core/apiSuccess';
+import { v4 as uuidv4 } from 'uuid';
 import { InternalError, ApiError, ErrorType, NotFoundError } from './../../core/apiError';
-import Room from '../model/Room';
+import { Room, ROOM_TYPE } from '../model/Room';
 
 // TODO: Add real database, but which one?
 export default class RoomRepo {
@@ -10,9 +10,15 @@ export default class RoomRepo {
      * Creating a voice-room or a text-room
      * @param room
      */
-    public static create(room: Room): Room {
-        const foundRoom = this.rooms.find(r => r.name === room.name);
+    public static create(name: string, type: ROOM_TYPE): Room {
+        const foundRoom = this.rooms.find(r => r.name === name && r.type === type);
         if (foundRoom) throw new InternalError('Room already exist');
+
+        const room: Room = {
+            id: uuidv4(),
+            name,
+            type,
+        };
 
         this.rooms.push(room);
 

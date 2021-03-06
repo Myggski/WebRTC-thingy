@@ -1,20 +1,26 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
     "target": "ES5",
+    "module": "CommonJS",
+    "strict": true,
     "allowJs": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
+    "noImplicitThis": false,
+    "baseUrl": ".",
     "outDir": "build",
     "rootDir": "src",
-    "strict": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "strictPropertyInitialization": false,
-    "strictNullChecks": true,
-    "strictFunctionTypes": false,
-    "noImplicitThis": false,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "baseUrl": ".",
-  }
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
