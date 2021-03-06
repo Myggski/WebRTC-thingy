@@ -3,10 +3,6 @@
 @import './mixins';
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
-body {
-  
-}
-
 *, *:before, *:after {
   box-sizing: inherit;
 }
@@ -28,4 +24,19 @@ html {
 
 body {
    height: 100%;
+}
+
+h1 {
+  font-size: $size-32;
+  margin: 0 0 $size-16 0;
+}
+
+h2 {
+  font-size: $size-24;
+  margin: 0 0 $size-16 0;
+}
+
+h3 {
+  font-size: $size-16;
+  margin: 0 0 $size-16 0;
 }

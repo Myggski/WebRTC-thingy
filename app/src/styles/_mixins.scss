@@ -5,3 +5,23 @@
     }
   }
 }
+
+@mixin button-focus {
+  &:focus {
+    outline-width: $size-4;
+    outline-color: $color-light;
+    box-shadow: none;
+  }
+}
+
+@mixin focus {
+  &:focus {
+    @content
+  }
+}
+
+@mixin active {
+  &:active {
+    @content
+  }
+}
