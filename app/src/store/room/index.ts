@@ -1,4 +1,4 @@
-import api from 'api';
+import api from '@/core/api';
 import { Room } from './types';
 import { AxiosResponse } from 'axios';
 import { VuexModule, Mutation, Action, Module } from 'vuex-class-modules';

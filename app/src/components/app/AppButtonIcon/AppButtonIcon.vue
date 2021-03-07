@@ -1,26 +1,27 @@
 <template>
   <button class="button-icon" type="button" @click.prevent="onClick">
-    <fa :icon="icon" :type="type" />
+    <fa :icon="[type, icon]" />
   </button>
 </template>
 
 <script lang="ts">
-import { Vue, Options, prop } from 'vue-class-component';
-import { Emit } from 'vue-property-decorator';
-import { Clickable } from '../../../interfaces/events';
+import { Vue, Options } from 'vue-class-component';
+import { Emit, Prop } from 'vue-property-decorator';
+import { Clickable } from '../../../core/interfaces/events';
 
 @Options({
   emits: ['click'],
-  props: {
-    icon: prop<string>({
-      required: true,
-    }),
-    type: prop<string>({
-      default: 'fas',
-    }),
-  },
 })
 export default class AppButtonIcon extends Vue implements Clickable {
+  @Prop({ required: true })
+  icon!: string;
+
+  @Prop({ default: 'fas' })
+  type: string;
+
+  @Prop()
+  srOnly: string;
+
   @Emit('click')
   onClick(e: PointerEvent): PointerEvent {
     return e;
@@ -36,10 +37,11 @@ export default class AppButtonIcon extends Vue implements Clickable {
   font-size: $size-24;
 
   @include hover {
-    cursor: pointer;
     color: $color-lightest;
   }
 
-  @include button-focus;
+  @include button-focus {
+    color: $color-lightest;
+  }
 }
 </style>

@@ -22,7 +22,7 @@
         "src/*"
       ],
       "api": [
-        "src/helpers/api"
+        "src/core/api"
       ]
     },
     "lib": [

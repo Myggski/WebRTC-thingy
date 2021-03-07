@@ -13,23 +13,22 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component';
 import { Emit, Ref } from 'vue-property-decorator';
-import { Clickable } from '../../../interfaces/events';
+import { Clickable } from '../../../core/interfaces/events';
 
 @Options({
   emits: ['click'],
 })
 export default class AppButton extends Vue implements Clickable {
-  rippleEffectTimeout = 0;
-  showRipple = false;
-  rippleLeftPosition: number;
-  rippleTopPosition: number;
+  private rippleEffectTimeout = 0;
+  private showRipple = false;
+  private rippleLeftPosition: number;
+  private rippleTopPosition: number;
 
   @Ref()
   readonly ripple!: HTMLSpanElement;
 
   @Emit('click')
   async onClick(e: PointerEvent): Promise<PointerEvent> {
-    console.log(e);
     this.showRipple = false;
     clearTimeout(this.rippleEffectTimeout);
     await this.$nextTick();
@@ -50,7 +49,7 @@ export default class AppButton extends Vue implements Clickable {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .button {
   position: relative;
   overflow: hidden;
@@ -60,8 +59,11 @@ export default class AppButton extends Vue implements Clickable {
   color: $color-lightest;
   font-size: $font-size-M;
   font-weight: bold;
-  padding: $size-8 $size-24;
+  padding: $size-8 $size-16;
   margin-bottom: $size-8;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
   &:after {
     background: #fff;
@@ -77,8 +79,6 @@ export default class AppButton extends Vue implements Clickable {
   }
 
   @include hover {
-    cursor: pointer;
-
     &:after {
       left: 120%;
     }
@@ -98,6 +98,10 @@ export default class AppButton extends Vue implements Clickable {
     margin-left: -50px;
     opacity: 0;
     animation: ripple 1s;
+  }
+
+  svg {
+    margin-left: $size-8;
   }
 }
 

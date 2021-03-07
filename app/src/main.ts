@@ -4,8 +4,9 @@ import router from './router';
 import store from './store';
 import { Vue } from 'vue-class-component';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import 'reflect-metadata';
 import './styles/main.scss';
-import './plugins/font-awesome';
+import './core/plugins/font-awesome';
 
 createApp(App)
   .use(store)

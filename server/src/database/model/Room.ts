@@ -3,7 +3,7 @@
  */
 export enum ROOM_TYPE {
     VOICE,
-    TEXT
+    TEXT,
 };
 
 /**

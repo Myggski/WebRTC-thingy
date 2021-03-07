@@ -4,7 +4,7 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        api: path.join(__dirname, 'src/helpers/api'),
+        api: path.join(__dirname, 'src/core/api'),
       },
     },
   },

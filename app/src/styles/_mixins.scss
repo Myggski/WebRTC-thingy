@@ -1,6 +1,7 @@
 @mixin hover {
   @media (any-hover: hover) {
     &:hover {
+      cursor: pointer;
       @content
     }
   }
@@ -8,20 +9,54 @@
 
 @mixin button-focus {
   &:focus {
-    outline-width: $size-4;
-    outline-color: $color-light;
-    box-shadow: none;
+    outline: 0;
+    box-shadow: 0 0 0 $size-4 $color-lightest;
+    @content;
+  }
+}
+
+@mixin label-focus {
+  &.is-focused {
+    box-shadow: 0 0 0 $size-4 $color-lightest;
+    @content;
   }
 }
 
 @mixin focus {
   &:focus {
-    @content
+    @content;
   }
 }
 
 @mixin active {
   &:active {
+    @content;
+  }
+}
+
+@mixin pseudo-font-awesome-icon {
+  &:before {
+    display: none;
+    font-weight: 900;
+    @content;
+  }
+}
+
+@mixin far-fa-icon {
+  @include pseudo-font-awesome-icon {
+    font-family: 'Font Awesome 5 Regular';
     @content
+  }
+}
+
+@mixin far-circle{
+  @include far-fa-icon {
+    content: '\f111';
+  }
+}
+
+@mixin far-dot-circle {
+  @include far-fa-icon {
+    content: '\f192';
   }
 }

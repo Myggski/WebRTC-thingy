@@ -33,8 +33,8 @@
   </transition>
 </template>
 <script lang="ts">
-import { Vue, Options, prop } from 'vue-class-component';
-import { Emit, Watch, Ref } from 'vue-property-decorator';
+import { Vue, Options } from 'vue-class-component';
+import { Emit, Watch, Ref, Prop } from 'vue-property-decorator';
 import { v4 as uuid } from 'uuid';
 import AppButtonIcon from '../AppButtonIcon';
 
@@ -43,19 +43,16 @@ import AppButtonIcon from '../AppButtonIcon';
     AppButtonIcon,
   },
   emits: ['close'],
-  props: {
-    header: prop<string>({
-      default: '',
-    }),
-    show: prop<boolean>({
-      default: false,
-    }),
-  },
 })
 export default class AppModal extends Vue {
   private id = uuid();
-  private show: boolean;
   private activeElement: HTMLElement;
+
+  @Prop({ default: '' })
+  header: string;
+
+  @Prop({ default: false })
+  show: boolean;
 
   get headerId() {
     return `header-${this.id}`;
@@ -97,6 +94,8 @@ export default class AppModal extends Vue {
   /**
    * Isolating the keyboard navigation, so the user only can navigate inside the modal
    * TODO: Make this a more general function so other components can use this also
+   * KNOWN BUG: When radio-buttons is last focusable, tabbing only select the first.
+   * But lastFocusableElement is last in radio-group, which is never selected, only shift+tab
    */
   isolateTabbing(e: KeyboardEvent) {
     const focusableElements =
@@ -117,7 +116,7 @@ export default class AppModal extends Vue {
         e.preventDefault();
       }
     } else {
-      if (document.activeElement === lastFocusableElement) {
+      if (document.activeElement === lastFocusableElement || !isInsideModal) {
         (firstFocusableElement as HTMLElement)?.focus();
         e.preventDefault();
       }
@@ -191,9 +190,11 @@ export default class AppModal extends Vue {
     max-width: 440px;
     width: 100%;
     background-color: $color-dark;
+    padding: $size-16;
+    border-radius: $size-4;
 
     .modal-header {
-      padding: $size-16;
+      margin-bottom: $size-16;
 
       .header {
         margin: $size-8 0 0 0;
