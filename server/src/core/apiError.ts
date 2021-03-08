@@ -4,7 +4,7 @@ import {
   InternalErrorResponse,
   NotFoundResponse,
   BadRequestResponse,
-  ApiResponse,
+  ConflictResponse,
 } from './ApiResponse';
 
 export enum ErrorType {
@@ -36,6 +36,8 @@ export class ApiError extends Error {
         return new NotFoundResponse(err.message).send(res);
       case ErrorType.BAD_REQUEST:
         return new BadRequestResponse(err.message).send(res);
+        case ErrorType.CONFLICT: 
+        return new ConflictResponse(err.message).send(res);
       default: {
         let { message } = err;
         // Do not send failure message in production as it may send sensitive data

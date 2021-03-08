@@ -96,6 +96,15 @@ export class NotFoundResponse extends ApiResponse {
 }
 
 /**
+ * Response Code - 409
+ */
+export class ConflictResponse extends ApiResponse {
+  constructor(message = 'Conflict') {
+    super(StatusCode.FAILURE, ResponseStatus.CONFLICT, message);
+  }
+}
+
+/**
  * Response Code - 500
  */
 export class InternalErrorResponse extends ApiResponse {

@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+
 import { InternalError, ApiError, ErrorType, NotFoundError } from './../../core/apiError';
 import { Room, ROOM_TYPE } from '../model/Room';
 
@@ -14,12 +14,7 @@ export default class RoomRepo {
         const foundRoom = this.rooms.find(r => r.name === name && r.type === type);
         if (foundRoom) throw new InternalError('Room already exist');
 
-        const room: Room = {
-            id: uuidv4(),
-            name,
-            type,
-        };
-
+        const room = new Room(name, type);
         this.rooms.push(room);
 
         return room;
