@@ -1,43 +1,40 @@
 
 import { Router } from 'express';
 import { Success, Created, NoContent } from '../core/apiSuccess';
-import RoomRepo from '../database/repository/RoomRepo';
+import RoomService from '../services/RoomService';
 
 const router = Router();
+const roomService = new RoomService();
 
 /**
  * Get all rooms
  */
 router.get('/', (req: any, res: any, next: any) => {
-    const rooms = RoomRepo.getRooms();
-    return Success(rooms).send(res);
+  return Success(roomService.getList()).send(res);
 });
 
 /**
  * Get room by name
  */
 router.get('/:name', (req: any, res: any, next: any) => {
-    const room = RoomRepo.findRoomByName(req.params.name);
-    return Success(room).send(res);
+  return Success(roomService.findById(req.params.id)).send(res);
 });
 
 /**
  * Remove room by name
  */
 router.delete('/:name', (req: any, res: any, next: any) => {
-    const { name } = req.params;
-
-    RoomRepo.removeRoomByName(name);
-    return NoContent(`Room ${name} is deleted`).send(res);
+  const { id } = req.params;
+  roomService.delete(id);
+  return NoContent(`Room ${id} is deleted`).send(res);
 });
 
 /**
  * Create room
  */
 router.post('/', (req: any, res: any) => {
-    const room = RoomRepo.create(req.body?.name, req.body?.type);
-    console.log(req.body);
-    return Created(room).send(res);
+  const room = roomService.create(req.body);
+  return Created(room).send(res);
 });
 
 export default router;

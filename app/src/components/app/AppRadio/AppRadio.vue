@@ -83,7 +83,6 @@ export default class AppRadio extends Vue implements Changeable {
   }
 
   focus() {
-    console.log('focus');
     this.isFocused = true;
   }
 

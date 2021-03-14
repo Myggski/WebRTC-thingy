@@ -18,6 +18,9 @@
     "baseUrl": ".",
     "outDir": "build",
     "rootDir": "src",
+    "types": [
+      "reflect-metadata"
+    ]
   },
   "exclude": [
     "dist",

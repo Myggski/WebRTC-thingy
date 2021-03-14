@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Options } from 'vue-class-component';
-import { ROOM_TYPE } from '../../store/room/types';
+import { RoomType } from '../../store/room/types';
 import AppButton from '../app/AppButton';
 import AppModal from '../app/AppModal';
 import AppRadio from '../app/AppRadio';
@@ -32,15 +32,15 @@ import ModalHandler from '../../core/abstracts/app/ModalHandler';
   },
 })
 export default class RoomCreator extends ModalHandler {
-  private roomTypeModel = ROOM_TYPE.VOICE;
+  private roomTypeModel = RoomType.VOICE;
 
-  get roomType(): typeof ROOM_TYPE {
-    return ROOM_TYPE;
+  get roomType(): typeof RoomType {
+    return RoomType;
   }
 
   get header(): string {
     const channelType =
-      this.roomTypeModel === ROOM_TYPE.VOICE ? 'Voice' : 'Text';
+      this.roomTypeModel === RoomType.VOICE ? 'Voice' : 'Text';
 
     return `Create ${channelType} Channel`;
   }

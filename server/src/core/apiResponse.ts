@@ -31,11 +31,41 @@ export abstract class ApiResponse {
   ) { }
 
   protected prepare<T extends ApiResponse>(res: Response, response: T): Response {
-    return res.status(this.status).json(response);
+    return res.status(this.status).json(ApiResponse.sanitize(response));
   }
 
   public send(res: Response): Response {
     return this.prepare<ApiResponse>(res, this);
+  }
+
+  private static classToJson(obj: any): any {
+    const jsonObj = Object.assign({} as any, obj);
+    const proto = Object.getPrototypeOf(obj);
+    for (const key of Object.getOwnPropertyNames(proto)) {
+      const desc = Object.getOwnPropertyDescriptor(proto, key);
+      const hasGetter = desc && typeof desc.get === 'function';
+      if (hasGetter) {
+        jsonObj[key] = obj[key];
+        delete jsonObj[`_${key}`]
+      }
+    }
+    return jsonObj;
+  }
+
+  private static sanitize<T extends ApiResponse>(response: T): T {
+    if (response instanceof SuccessResponse) {
+      const clone = Object.assign({}, response);
+
+      if (Array.isArray(response.data)) {
+        clone.data = clone.data.map(ApiResponse.classToJson);
+      } else if (response.data === Object(response.data)) {
+        clone.data = ApiResponse.classToJson(clone.data);
+      }
+
+      return clone;
+    }
+
+    return response;
   }
 }
 
@@ -43,7 +73,7 @@ export abstract class ApiResponse {
  * Response Code - 200
  */
 export class SuccessResponse<T> extends ApiResponse {
-  constructor(message: string, public data: T) {
+  constructor(message: string, public data: T[] | T) {
     super(StatusCode.SUCCESS, ResponseStatus.SUCCESS, message);
   }
 

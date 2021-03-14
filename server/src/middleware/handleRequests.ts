@@ -1,7 +1,12 @@
+import path from 'path';
 import { environment } from '../config';
 import { Response, Request, NextFunction } from 'express';
 import { ApiError, InternalError, NotFoundError } from '../core/apiError';
 
+
+export const handleIndex = (req: Request, res: Response, next: NextFunction) => {
+  res.sendFile(path.join(__dirname, '../../app/dist/index.html'));
+}
 /**
  * If it's a custom made error, handle the error with care.
  * Otherwise we don't give a rats ass, don't spill the beans of what have happend to the client.

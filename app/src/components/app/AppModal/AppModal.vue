@@ -49,16 +49,16 @@ export default class AppModal extends Vue {
   private activeElement: HTMLElement;
 
   @Prop({ default: '' })
-  header: string;
+  public header: string;
 
   @Prop({ default: false })
-  show: boolean;
+  public show: boolean;
 
-  get headerId() {
+  public get headerId() {
     return `header-${this.id}`;
   }
 
-  get modalId() {
+  public get modalId() {
     return `modal-${this.id}`;
   }
 
@@ -66,14 +66,14 @@ export default class AppModal extends Vue {
    * The Modal
    */
   @Ref()
-  modal: HTMLDivElement;
+  public modal: HTMLDivElement;
 
   /**
    * Handles keydown event for tab isolation.
    * Also removes focus behind modal
    */
   @Watch('show')
-  async onShowChanged() {
+  private async onShowChanged() {
     if (this.show) {
       this.blurActiveElement();
       window.addEventListener('keydown', this.isolateTabbing);
@@ -87,7 +87,7 @@ export default class AppModal extends Vue {
    * Therefore, the component need to emit to parent component, when to close
    */
   @Emit('close')
-  onCloseModal(e: MouseEvent) {
+  private onCloseModal(e: MouseEvent) {
     return e;
   }
 
@@ -97,7 +97,7 @@ export default class AppModal extends Vue {
    * KNOWN BUG: When radio-buttons is last focusable, tabbing only select the first.
    * But lastFocusableElement is last in radio-group, which is never selected, only shift+tab
    */
-  isolateTabbing(e: KeyboardEvent) {
+  private isolateTabbing(e: KeyboardEvent) {
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const focusableContent = this.modal.querySelectorAll(focusableElements);
@@ -126,7 +126,7 @@ export default class AppModal extends Vue {
   /**
    * Saves the active element and blur it out
    */
-  blurActiveElement() {
+  private blurActiveElement() {
     this.activeElement = document.activeElement as HTMLElement;
     this.activeElement.blur();
   }
@@ -134,7 +134,7 @@ export default class AppModal extends Vue {
   /**
    * Focuses on previous elements that had focus before the modal was opened
    */
-  focusActiveElement() {
+  private focusActiveElement() {
     this.activeElement.focus();
     delete this.activeElement;
   }

@@ -1,24 +1,21 @@
 import bodyParser from 'body-parser';
 import path from 'path';
 import cors from 'cors';
-import express, { Application, Request, Response, NextFunction } from 'express';
-import { Server as SocketIOServer } from 'socket.io';
-import { handleError, handlePageNotFound } from './middleware/handleRequests';
+import express, { Application } from 'express';
+import { handleError, handleIndex, handlePageNotFound } from './middleware/handleRequests';
 import { createServer, Server as HTTPServer } from 'http';
-import { port, corsUrl, environment } from './config';
+import { port, corsUrl } from './config';
 import routes from './routes';
+import ServerSocket from './sockets';
 
 export class Server {
     private httpServer: HTTPServer;
     private app: Application;
-    private io: SocketIOServer;
 
     private readonly PORT = Number.parseInt(port || '', 10) || 5000;
 
     constructor() {
         this.initialize();
-
-        this.handleSocketConnection();
         this.handleRoutes();
     }
 
@@ -27,7 +24,7 @@ export class Server {
         this.handleMiddleware();
 
         this.httpServer = createServer(this.app);
-        this.io = new SocketIOServer(this.httpServer);
+        ServerSocket.initializeSocket(this.httpServer);
     }
 
     private handleMiddleware(): void {
@@ -38,23 +35,19 @@ export class Server {
     }
 
     private handleRoutes(): void {
-        this.app.get("/", (req, res, next) => {
-            res.sendFile(path.join(__dirname, '../../app/dist/index.html'));
-        });
+        // Static index file
+        this.app.get("/", handleIndex);
 
         // Api-routes
         this.app.use('/api', routes);
+
         // Catch 404 and forward to error handler
         this.app.use(handlePageNotFound);
+
         // Catch errors
         this.app.use(handleError);
     }
 
-    private handleSocketConnection(): void {
-        this.io.on("connection", socket => {
-            console.log("Socket connected");
-        });
-    }
 
     public listen(callback: (port: number) => void): void {
         this.httpServer.listen(this.PORT, () =>

@@ -4,7 +4,6 @@ import {
   SuccessCreatedResponse,
   SuccessNoContentResponse,
 } from './ApiResponse';
-
 enum SuccessType {
   OK,
   CREATED,
